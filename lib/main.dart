@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import './services/auth_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:oauth2_client/access_token_response.dart';
 
-void main() {
+void main() async{
+  await dotenv.load(fileName : '.env');
   runApp(const MyApp());
 }
 
@@ -34,11 +37,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final token = '0f12d9a236d2d28d8815e54240615b3ec9c6e6b87a0c35473c919367a15d28b3';
+  AccessTokenResponse token = AccessTokenResponse();
   TextEditingController loginController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -54,12 +56,18 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
               TextButton(
-                onPressed: () {
-                  // getAccess();
+                onPressed: () async {
+                  final access = await getAccess(token);
+                  setState(() {
+                    token = access;
+                  });
+                  // print(token.accessToken);
                   http.get(Uri.parse("https://api.intra.42.fr/v2/users/" + loginController.text ), headers: {
-                    "Authorization": "Bearer $token"
+                    "Authorization": "Bearer ${token.accessToken}"
                   }).then((response) {
-                    print(response.body);
+                    // final List data = [];
+                    // data.add(response.body);
+                    // print(token.accessToken);
                   });
                 },
                 child: const Text('Sign in anonymously'),
