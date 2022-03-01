@@ -17,7 +17,6 @@ class MyClient extends OAuth2Client {
 
 
 //https://api.intra.42.fr/oauth/token/info
-checkToken() async {}
 Future<AccessTokenResponse> getAccess(token) async {
 //Instantiate the client
   if (token.accessToken != null && token.isExpired() == false) {
