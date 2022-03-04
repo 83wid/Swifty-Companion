@@ -1,13 +1,20 @@
 // ignore_for_file: use_key_in_widget_constructors
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:swiftyCompanion/services/cursus.dart';
 import 'package:swiftyCompanion/services/userScheme.dart';
+import 'package:swiftyCompanion/services/cursus.dart';
 
 class Header extends StatefulWidget {
   // const Header({Key? key,}) : super(key: key);
   @override
   State<Header> createState() => _HeaderState();
 }
+
+String slevel = Cursus.fromJson(user).cursus?[0]['level'].toString() != null
+    ? '${Cursus.fromJson(user).cursus?[0]['level']}'
+    : '0';
+double level = double.parse(slevel);
 
 class Avatar extends StatelessWidget {
   const Avatar({Key? key, required this.imageUrl, required this.displayName})
@@ -118,10 +125,42 @@ class _HeaderState extends State<Header> {
   }
 }
 
+class Avaliable extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Container(
+      // width: MediaQuery.of(context).size.width / 2,
+      height: MediaQuery.of(context).size.height / 10,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.green.shade300, width: 2),
+        color: Colors.white,
+      ),
+      child: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text(user['location'] != null ? 'Avaliable' : 'Unavaliable'),
+          Text(user['location'] != null ? user['location'].toString() : '_'),
+        ],
+      )),
+    );
+  }
+}
+
 class UserInfo extends StatefulWidget {
   // const UserInfo({Key? key,}) : super(key: key);
   @override
   State<UserInfo> createState() => _UserInfoState();
+}
+
+List<DropdownMenuItem<Object>>? cursusBuild() {
+  // print(Cursus.fromJson(user).cursus?.length);
+  return Cursus.fromJson(user).cursus?.map((cursus) {
+    return DropdownMenuItem(
+      child: Text(cursus['cursus']['slug'].toString()),
+      value: cursus['cursus']['id'].toString(),
+    );
+  }).toList();
 }
 
 class _UserInfoState extends State<UserInfo> {
@@ -133,17 +172,7 @@ class _UserInfoState extends State<UserInfo> {
         children: [
           Container(
             // width: MediaQuery.of(context).size.width / 2,
-            height: MediaQuery.of(context).size.height / 10,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.green.shade300, width: 2),
-              color: Colors.white,
-            ),
-            child: Center(child: Text(user['location'].toString())),
-          ),
-          Container(
-            // width: MediaQuery.of(context).size.width / 2,
-            height: MediaQuery.of(context).size.height / 10,
+            height: MediaQuery.of(context).size.height / 8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: Colors.green.shade300, width: 2),
@@ -227,11 +256,77 @@ class _UserInfoState extends State<UserInfo> {
                     ),
                   ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 100,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: Text(
+                        'Cursus:',
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width / 42,
+                          // fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width / 20,
+                      child: DropdownButton(
+                        items: cursusBuild(),
+                        onChanged: (value) {
+                          print(value);
+                          // setState(() {
+                          //   slevel = value;
+                          // });
+                        },
+                        // value: user['cursus'],
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class Level extends StatefulWidget {
+  const Level({Key? key}) : super(key: key);
+  @override
+  State<Level> createState() => _LevelState();
+}
+
+class _LevelState extends State<Level> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.green.shade300,
+          ),
+          height: MediaQuery.of(context).size.height / 20,
+          width:
+              MediaQuery.of(context).size.width * (level - level.floor()).abs(),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.green.shade300, width: 2),
+          ),
+          height: MediaQuery.of(context).size.height / 20,
+          child: Center(
+            child: Text(slevel.toString()),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -251,15 +346,17 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Header(),
           Padding(
-            padding: EdgeInsets.only(left: 20.0, right: 20.0),
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-              Avatar(
-                  imageUrl: user['image_url'].toString(),
-                  displayName: user['displayname'].toString()),
-              UserInfo(),
-            ]),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Avatar(
+                      imageUrl: user['image_url'].toString(),
+                      displayName: user['displayname'].toString()),
+                  const Level(),
+                  Avaliable(),
+                  UserInfo(),
+                ]),
           )
         ],
       ),
