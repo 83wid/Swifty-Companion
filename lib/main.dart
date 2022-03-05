@@ -46,8 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // LoginPage(),
-            ProfilePage(),
+            LoginPage(),
+            // ProfilePage(),
             // TextFormField(
             //   controller: loginController,
             //   decoration: const InputDecoration(
