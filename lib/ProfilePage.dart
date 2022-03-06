@@ -2,8 +2,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:swiftyCompanion/services/cursus.dart';
+import 'package:swiftyCompanion/services/projects.dart';
 import 'package:swiftyCompanion/services/userScheme.dart';
 import 'package:swiftyCompanion/services/cursus.dart';
+// import 'package:tableview/tableview.dart';
 
 class Header extends StatefulWidget {
   // const Header({Key? key,}) : super(key: key);
@@ -132,7 +134,7 @@ class Avaliable extends StatelessWidget {
       height: MediaQuery.of(context).size.height / 10,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.green.shade300, width: 2),
+        border: Border.all(color: Colors.black, width: 2),
         color: Colors.white,
       ),
       child: Center(
@@ -175,7 +177,7 @@ class _UserInfoState extends State<UserInfo> {
             height: MediaQuery.of(context).size.height / 8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.green.shade300, width: 2),
+              border: Border.all(color: Colors.black, width: 2),
               color: Colors.white,
             ),
             child: Column(
@@ -272,17 +274,43 @@ class _UserInfoState extends State<UserInfo> {
                         ),
                       ),
                     ),
+                    Text(Cursus.fromJson(user).cursus?[0]['cursus']['slug']),
+                    // SizedBox(
+                    //   height: MediaQuery.of(context).size.width / 20,
+                    //   child: DropdownButton(
+                    //     items: cursusBuild(),
+                    //     onChanged: (value) {
+                    //       print(value);
+                    //       // setState(() {
+                    //       //   slevel = value;
+                    //       // });
+                    //     },
+                    //     // value: user['cursus'],
+                    //   ),
+                    // ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.width / 20,
-                      child: DropdownButton(
-                        items: cursusBuild(),
-                        onChanged: (value) {
-                          print(value);
-                          // setState(() {
-                          //   slevel = value;
-                          // });
-                        },
-                        // value: user['cursus'],
+                      width: MediaQuery.of(context).size.width / 100,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: Text(
+                        'Grade:',
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width / 42,
+                          // fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      Cursus.fromJson(user).cursus?[0]['grade'],
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 42,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
@@ -292,6 +320,49 @@ class _UserInfoState extends State<UserInfo> {
           ),
         ],
       ),
+    );
+  }
+}
+
+Widget project(context, {projectName, projectGrade}) {
+  // print(data.length);
+  return Container(
+    height: MediaQuery.of(context).size.height / 20,
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(projectName),
+        Text(projectGrade),
+      ],
+    ),
+  );
+}
+
+class Projects extends StatefulWidget {
+  const Projects({Key? key}) : super(key: key);
+  @override
+  State<Projects> createState() => _ProjectsState();
+}
+
+class _ProjectsState extends State<Projects> {
+  final data = allProjects(1).toList();
+  @override
+  Widget build(BuildContext context) {
+    // print(user['projects_users']);
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.black, width: 2),
+      ),
+      height: MediaQuery.of(context).size.height / 5,
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+          itemCount: data.length,
+          itemBuilder: ((context, i) => project(context,
+              projectName: data[i]['project']['name'],
+              projectGrade: data[i]['final_mark'].toString()))
+          // project(),
+          ),
     );
   }
 }
@@ -319,7 +390,7 @@ class _LevelState extends State<Level> {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.green.shade300, width: 2),
+            border: Border.all(color: Colors.black, width: 2),
           ),
           height: MediaQuery.of(context).size.height / 20,
           child: Center(
@@ -356,6 +427,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   const Level(),
                   Avaliable(),
                   UserInfo(),
+                  Projects(),
                 ]),
           )
         ],

@@ -44,10 +44,10 @@ class _MyHomePageState extends State<MyHomePage> {
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            LoginPage(),
-            // ProfilePage(),
+            // LoginPage(),
+            ProfilePage(),
             // TextFormField(
             //   controller: loginController,
             //   decoration: const InputDecoration(
