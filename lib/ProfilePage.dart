@@ -7,11 +7,6 @@ import 'package:swiftyCompanion/services/userScheme.dart';
 import 'package:swiftyCompanion/services/cursus.dart';
 // import 'package:tableview/tableview.dart';
 
-class Header extends StatefulWidget {
-  // const Header({Key? key,}) : super(key: key);
-  @override
-  State<Header> createState() => _HeaderState();
-}
 
 String slevel = Cursus.fromJson(user).cursus?[0]['level'].toString() != null
     ? '${Cursus.fromJson(user).cursus?[0]['level']}'
@@ -52,12 +47,12 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 3 * MediaQuery.of(context).size.width / 6,
-      height: MediaQuery.of(context).size.height / 10,
+      width:  2 * MediaQuery.of(context).size.width / 3,
+      height: MediaQuery.of(context).size.height / 12,
       child: Row(
         children: <Widget>[
           Container(
-            width: 2 * MediaQuery.of(context).size.width / 6,
+            width: MediaQuery.of(context).size.width / 2.5,
             height: MediaQuery.of(context).size.height / 20,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -104,10 +99,16 @@ class SearchBar extends StatelessWidget {
   }
 }
 
+class Header extends StatefulWidget {
+  // const Header({Key? key,}) : super(key: key);
+  @override
+  State<Header> createState() => _HeaderState();
+}
 class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      
       decoration: const BoxDecoration(
         color: Colors.white,
       ),
@@ -128,6 +129,7 @@ class _HeaderState extends State<Header> {
 }
 
 class Avaliable extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
     return Container(
       // width: MediaQuery.of(context).size.width / 2,
@@ -356,7 +358,7 @@ class _ProjectsState extends State<Projects> {
       ),
       height: MediaQuery.of(context).size.height / 5,
       child: ListView.builder(
-        scrollDirection: Axis.vertical,
+          scrollDirection: Axis.vertical,
           itemCount: data.length,
           itemBuilder: ((context, i) => project(context,
               projectName: data[i]['project']['name'],
@@ -416,6 +418,9 @@ class _ProfilePageState extends State<ProfilePage> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Header(),
+          const SizedBox(
+            height: 10,
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: Column(
@@ -424,10 +429,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   Avatar(
                       imageUrl: user['image_url'].toString(),
                       displayName: user['displayname'].toString()),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const Level(),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Avaliable(),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   UserInfo(),
-                  Projects(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Projects(),
                 ]),
           )
         ],
