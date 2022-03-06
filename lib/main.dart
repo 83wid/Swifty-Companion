@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swiftyCompanion/LoginPage.dart';
 import 'package:swiftyCompanion/ProfilePage.dart';
+import 'package:swiftyCompanion/helpers/styles.dart';
 import './services/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -17,10 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: theme,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -41,36 +40,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // backgroundColor: Colors.black12,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            // LoginPage(),
-            ProfilePage(),
-            // TextFormField(
-            //   controller: loginController,
-            //   decoration: const InputDecoration(
-            //     labelText: 'Login',
-            //   ),
-            // ),
-            //   TextButton(
-            //     onPressed: () async {
-            //       final access = await getAccess(token);
-            //       setState(() {
-            //         token = access;
-            //       });
-            //       // print(token.accessToken);
-            //       http.get(Uri.parse("https://api.intra.42.fr/v2/users/" + loginController.text ), headers: {
-            //         "Authorization": "Bearer ${token.accessToken}"
-            //       }).then((response) {
-            //         // final List data = [];
-            //         // data.add(response.body);
-            //         // print(token.accessToken);
-            //       });
-            //     },
-            //     child: const Text('Sign in anonymously'),
-            //   ),
+            LoginPage(),
           ],
         ),
       ),

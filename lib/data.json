@@ -2232,3 +2232,14 @@
         }
     ]
 }
+
+{
+    "id": 69, 
+    "name": "Insomniacs", 
+    "slug": "insomniacs", 
+    "image_url": "https://cdn.intra.42.fr/coalition/image/69/insomniacs.svg", 
+    "cover_url": "https://cdn.intra.42.fr/coalition/cover/69/federation_background.jpg", 
+    "color": "#4180DB", 
+    "score": "22645", 
+    "user_id": 59732
+}
