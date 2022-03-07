@@ -1,3 +1,5 @@
+import 'package:swiftyCompanion/services/cursus.dart';
+
 class Project {
   final List? projects;
 
@@ -11,8 +13,8 @@ class Project {
 dynamic allProjects(user) {
   List data = Project.fromJson(user).projects ?? [];
   dynamic ret = data.where((element) =>
-      element['cursus_ids'][0] ==
-          user['cursus_users'][0]['cursus']['id'] &&
+       element['cursus_ids'][0] ==
+          getCursus(user['cursus_users'])['cursus']['id'] &&
       element['status'] == 'finished' &&
       element['project']['parent_id'] == null &&
       element['validated?'] == true);

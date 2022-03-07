@@ -44,10 +44,7 @@ Future<AccessTokenResponse> getAccess(token) async {
 // }
 }
 
-
-
 dynamic auth() async {
-  
   final result = await FlutterWebAuth.authenticate(
     url:
         "https://api.intra.42.fr/oauth/authorize?client_id=99d29e146f98b61033acb008b5e121c9ce157eb1e23bead0905ad39fa0f9e2de&redirect_uri=swifty.companion.app%3A%2F%2Fcallback&response_type=code",
@@ -69,5 +66,16 @@ dynamic auth() async {
   final userData = await getUserData(null, token);
   final userCoalition = await getCoalition(userData, token);
   return User(userData, token, userCoalition);
+}
 
+dynamic searchUserData(userId, user) async {
+  final userData = await getUserData(userId, user.token);
+  if (userData.length == 0) {
+    return null;
+  }
+  final userCoalition = await getCoalition(userData, user.token);
+  if (userCoalition.length != 0) {
+    return User(userData, user.token, userCoalition);
+  }
+  return null;
 }

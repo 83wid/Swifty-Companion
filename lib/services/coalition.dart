@@ -8,11 +8,12 @@ dynamic getCoalition(user, token) async {
   return jsonDecode(res.body);
 }
 
-dynamic getUserData(user, token) async {
-  if (user != null) {
+dynamic getUserData(userId, token) async {
+  if (userId != null) {
     final res = await http.get(
-        Uri.parse("https://api.intra.42.fr/v2/users/${user['id']}"),
-        headers: {"Authorization": "Bearer ${token.accessToken}"});
+        Uri.parse("https://api.intra.42.fr/v2/users/$userId"),
+        headers: {"Authorization": "Bearer ${token['access_token']}"});
+        // print(token['access_token']);
     return jsonDecode(res.body);
   } else {
     final res = await http.get(Uri.parse("https://api.intra.42.fr/v2/me"),
