@@ -28,6 +28,7 @@ const clientId =
 //   ]);
 
 class _LoginPageState extends State<LoginPage> {
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -35,41 +36,53 @@ class _LoginPageState extends State<LoginPage> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('images/42.png'),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.height / 15,
-              // height: MediaQuery.of(context).size.height / 20,
-              child: TextButton(
-                style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                  backgroundColor: MaterialStateProperty.all(Colors.black),
-                  overlayColor: MaterialStateProperty.all(Colors.grey.shade700),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+          children: _isLoading
+              ? [
+                  const CircularProgressIndicator(
+                    strokeWidth: 2,
+                  )
+                ]
+              : [
+                  Image.asset('images/42.png'),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height / 15,
+                    // height: MediaQuery.of(context).size.height / 20,
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.black),
+                        overlayColor:
+                            MaterialStateProperty.all(Colors.grey.shade700),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      onPressed: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        // Present the dialog to the user
+                        final User result = await auth();
+                        if (result.user != null) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfilePage(result)));
+                        }
+                      },
+                      child: const Center(
+                          child: Text(
+                        'Login',
+                        style: TextStyle(color: Colors.white),
+                      )),
                     ),
                   ),
-                ),
-                onPressed: () async {
-                  // Present the dialog to the user
-                  final User result = await auth();
-                  if (result.user != null) {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ProfilePage(result)));
-                  }
-                },
-                child: const Center(
-                    child: Text(
-                  'Login',
-                  style: TextStyle(color: Colors.white),
-                )),
-              ),
-            ),
-          ],
+                ],
         ),
       ),
     );
