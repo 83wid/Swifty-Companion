@@ -12,11 +12,17 @@ class Project {
 
 dynamic allProjects(user) {
   List data = Project.fromJson(user).projects ?? [];
+  if (data.isEmpty) {
+    return [];
+  }
   dynamic ret = data.where((element) =>
-       element['cursus_ids'][0] ==
+       element['cursus_ids'].length != 0 && element['cursus_ids'][0] ==
           getCursus(user['cursus_users'])['cursus']['id'] &&
       element['status'] == 'finished' &&
-      element['project']['parent_id'] == null &&
-      element['validated?'] == true);
+      element['project']['parent_id'] == null 
+      &&
+      element['validated?'] != null
+      );
+  if (ret.isEmpty) return [];
   return ret;
 }

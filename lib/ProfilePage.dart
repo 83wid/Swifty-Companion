@@ -5,6 +5,7 @@ import 'package:swiftyCompanion/Widgets/Coalition.dart';
 import 'package:swiftyCompanion/Widgets/Header.dart';
 import 'package:swiftyCompanion/Widgets/Level.dart';
 import 'package:swiftyCompanion/Widgets/Projects.dart';
+import 'package:swiftyCompanion/Widgets/Skills.dart';
 import 'package:swiftyCompanion/Widgets/UserInfo.dart';
 import 'package:swiftyCompanion/services/User.dart';
 
@@ -28,6 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     user = widget.userData;
   }
+
   // set userVal(User value) => setState(() => user = widget.userData);
   @override
   Widget build(BuildContext context) {
@@ -59,9 +61,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: NetworkImage(widget
-                                        .userData.coalition[0]['cover_url']
-                                        .toString()),
+                                    image: NetworkImage(widget.userData
+                                            .coalition != null ? widget.userData
+                                            .coalition[0]['cover_url'] :
+                                        'https://cdn.intra.42.fr/coalition/cover/69/federation_background.jpg'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -89,6 +92,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 10,
                           ),
                           Projects(user: user.user),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // Skills(user: user.user,),
                         ]),
                   )
                 ],

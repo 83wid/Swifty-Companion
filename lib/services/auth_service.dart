@@ -69,13 +69,16 @@ dynamic auth() async {
 }
 
 dynamic searchUserData(userId, user) async {
+  if (userId != null && (userId.contains(RegExp(r'[A-Z]', caseSensitive: false)) == false || userId.contains('-'))) {
+    return null;
+  }
   final userData = await getUserData(userId, user.token);
   if (userData.length == 0) {
     return null;
   }
   final userCoalition = await getCoalition(userData, user.token);
-  if (userCoalition.length != 0) {
-    return User(userData, user.token, userCoalition);
+  if (userCoalition.length == 0) {
+    return User(userData, user.token, null);
   }
-  return null;
+  return User(userData, user.token, userCoalition);
 }

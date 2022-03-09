@@ -44,14 +44,16 @@ class _UserInfoState extends State<UserInfo> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 5,
                   child: Text(
-                    'Displayname:',
+                    'Points:',
                     style: textStyle,
                   ),
                 ),
-                Text(
-                  widget.user['displayname'].toString(),
-                  style: textStyle,
-                ),
+                widget.user['correction_point'] != null
+                    ? Text(
+                        widget.user['correction_point'].toString(),
+                        style: textStyle,
+                      )
+                    : const SizedBox(),
               ],
             ),
             Row(
@@ -67,10 +69,12 @@ class _UserInfoState extends State<UserInfo> {
                     style: textStyle,
                   ),
                 ),
-                Text(
-                  widget.user['email'].toString(),
-                  style: textStyle,
-                ),
+                widget.user['email'] != null
+                    ? Text(
+                        widget.user['email'].toString(),
+                        style: textStyle,
+                      )
+                    : const SizedBox(),
               ],
             ),
             Row(
@@ -86,10 +90,12 @@ class _UserInfoState extends State<UserInfo> {
                     style: textStyle,
                   ),
                 ),
-                Text(
-                  widget.user['wallet'].toString(),
-                  style: textStyle,
-                ),
+                widget.user['wallet'] != null
+                    ? Text(
+                        widget.user['wallet'].toString(),
+                        style: textStyle,
+                      )
+                    : const SizedBox(),
               ],
             ),
             Row(
@@ -125,7 +131,7 @@ class _UserInfoState extends State<UserInfo> {
                   ),
                 ),
                 Text(
-                  getCursus(widget.user['cursus_users'])['grade'],
+                  getCursus(widget.user['cursus_users'])['grade'] ?? '-',
                   style: textStyle,
                 ),
               ],

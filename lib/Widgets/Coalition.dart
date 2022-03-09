@@ -44,7 +44,7 @@ class Coalition extends StatelessWidget {
   final User user;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return user.coalition == null ? const SizedBox() : SizedBox(
         height: MediaQuery.of(context).size.height / 15,
         // width: MediaQuery.of(context).size.width / 2,
         child: Row(
