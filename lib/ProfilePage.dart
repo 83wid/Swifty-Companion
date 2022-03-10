@@ -83,18 +83,40 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Available(user: user.user),
-                          const SizedBox(
-                            height: 10,
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            child: ListView(
+                              shrinkWrap: true,
+                              // physics: NeverScrollableScrollPhysics(),
+                              children: [
+                                Available(user: user.user),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                UserInfo(user: user.user),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Projects(user: user.user),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Skills(user: user.user),
+                              ],
+                            ),
                           ),
-                          UserInfo(user: user.user),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Projects(user: user.user),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          // Available(user: user.user),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          // UserInfo(user: user.user),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          // Projects(user: user.user),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
                           // Skills(user: user.user,),
                         ]),
                   )

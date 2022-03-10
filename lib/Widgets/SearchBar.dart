@@ -57,39 +57,61 @@ class _SearchBarState extends State<SearchBar> {
                       ),
                     ),
                     onPressed: () async {
-                      if (loginController.text != '') {
+                      if (loginController.text.isNotEmpty) {
                         setState(() {
                           _isLoading = true;
                         });
-                        final userData = await searchUserData(
-                            loginController.text, widget.user);
-                        if (userData != null) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProfilePage(
-                                userData,
+                        if (loginController.text[0]
+                            .contains(RegExp(r'[A-Z]', caseSensitive: false))) {
+                          final userData = await searchUserData(
+                              loginController.text, widget.user);
+                          if (userData != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProfilePage(
+                                  userData,
+                                ),
                               ),
-                            ),
-                          );
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: const Text('User not found'),
-                                  content:
-                                      const Text('Please check your login'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text('Dismiss'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              });
+                            );
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text('User not found'),
+                                    content:
+                                        const Text('Please check your login'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text('Dismiss'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
+                          }
+                        }
+                        else {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('Unvalid login'),
+                                content: const Text(
+                                    'Please enter valid login to search'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('Dismiss'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
                         }
                       } else {
                         showDialog(

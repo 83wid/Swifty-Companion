@@ -69,7 +69,7 @@ dynamic auth() async {
 }
 
 dynamic searchUserData(userId, user) async {
-  if (userId != null && (userId.contains(RegExp(r'[A-Z]', caseSensitive: false)) == false || userId.contains('-'))) {
+  if (userId != null && userId.contains(RegExp(r'[A-Z]', caseSensitive: false)) == false) {
     return null;
   }
   final userData = await getUserData(userId, user.token);

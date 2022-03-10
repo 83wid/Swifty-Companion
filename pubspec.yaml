@@ -41,6 +41,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   flutter_svg: ^1.0.3
   flutter_radar_chart: ^0.2.1
+  radar_chart: ^2.1.0
 
 dev_dependencies:
   flutter_test:
