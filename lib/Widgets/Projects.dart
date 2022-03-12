@@ -1,8 +1,9 @@
+// ignore_for_file: file_names,
 import 'package:flutter/material.dart';
-import 'package:swiftyCompanion/services/projects.dart';
+import 'package:swifty_companion/services/projects.dart';
+import 'package:swifty_companion/services/user.dart';
 
 Widget project(context, {projectName, projectGrade, validated}) {
-  print(validated);
   return Container(
     padding: EdgeInsets.all(MediaQuery.of(context).size.width / 100),
     height: MediaQuery.of(context).size.height / 20,
@@ -19,7 +20,7 @@ Widget project(context, {projectName, projectGrade, validated}) {
 
 class Projects extends StatefulWidget {
   const Projects({Key? key, required this.user}) : super(key: key);
-  final user;
+  final User user;
   @override
   State<Projects> createState() => _ProjectsState();
 }
@@ -27,12 +28,11 @@ class Projects extends StatefulWidget {
 class _ProjectsState extends State<Projects> {
   @override
   Widget build(BuildContext context) {
-    final data = allProjects(widget.user).toList();
-    // print(data);
+    final data = allProjects(widget.user.user).toList();
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.blue, width: 2),
+        border: Border.all(color: widget.user.color, width: 2),
       ),
       height: MediaQuery.of(context).size.height / 5,
       width: MediaQuery.of(context).size.width,

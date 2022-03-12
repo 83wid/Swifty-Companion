@@ -1,11 +1,13 @@
+// ignore_for_file: file_names,
 import 'package:flutter/material.dart';
-import 'package:swiftyCompanion/ProfilePage.dart';
-import 'package:swiftyCompanion/Widgets/SearchBar.dart';
-import 'package:swiftyCompanion/services/auth_service.dart';
+import 'package:swifty_companion/profilePage.dart';
+import 'package:swifty_companion/Widgets/SearchBar.dart';
+import 'package:swifty_companion/services/auth_service.dart';
+import 'package:swifty_companion/services/user.dart';
 
 class Header extends StatefulWidget {
   const Header({Key? key, required this.user}) : super(key: key);
-  final user;
+  final User user;
   @override
   State<Header> createState() => _HeaderState();
 }
@@ -29,7 +31,7 @@ class _HeaderState extends State<Header> {
                   _isLoading = true;
                 });
                 // widget.callback(true);
-                final userData = await searchUserData(null, widget.user);
+                final User userData = await searchUserData(null, widget.user);
                 if (userData.user['id'] != widget.user.user['id']) {
                   setState(() {
                     _isLoading = false;
@@ -43,9 +45,9 @@ class _HeaderState extends State<Header> {
                     ),
                   );
                 }
-                  setState(() {
-                    _isLoading = false;
-                  });
+                setState(() {
+                  _isLoading = false;
+                });
                 // widget.callback(false);
               },
               child: _isLoading

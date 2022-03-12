@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:swiftyCompanion/LoginPage.dart';
-import 'package:swiftyCompanion/ProfilePage.dart';
-import 'package:swiftyCompanion/helpers/styles.dart';
-import './services/auth_service.dart';
-import 'package:http/http.dart' as http;
+import 'package:swifty_companion/loginPage.dart';
+import 'package:swifty_companion/helpers/styles.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:oauth2_client/access_token_response.dart';
 
@@ -44,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
+          children: const <Widget>[
             LoginPage(),
           ],
         ),

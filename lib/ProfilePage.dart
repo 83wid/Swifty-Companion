@@ -1,21 +1,42 @@
-import 'package:flutter/material.dart';
-import 'package:swiftyCompanion/Widgets/Available.dart';
-import 'package:swiftyCompanion/Widgets/Avatar.dart';
-import 'package:swiftyCompanion/Widgets/Coalition.dart';
-import 'package:swiftyCompanion/Widgets/Header.dart';
-import 'package:swiftyCompanion/Widgets/Level.dart';
-import 'package:swiftyCompanion/Widgets/Projects.dart';
-import 'package:swiftyCompanion/Widgets/Skills.dart';
-import 'package:swiftyCompanion/Widgets/UserInfo.dart';
-import 'package:swiftyCompanion/services/User.dart';
-
-// import 'package:swiftyCompanion/services/cursus.dart';
-// import 'package:tableview/tableview.dart';
+// ignore_for_file: file_names,
+import "package:flutter/material.dart"
+    show
+        BoxDecoration,
+        BoxFit,
+        BuildContext,
+        Center,
+        CircularProgressIndicator,
+        Color,
+        Column,
+        Container,
+        DecorationImage,
+        EdgeInsets,
+        Key,
+        ListView,
+        MainAxisAlignment,
+        MediaQuery,
+        NetworkImage,
+        Padding,
+        Scaffold,
+        SizedBox,
+        Stack,
+        State,
+        StatefulWidget,
+        Widget;
+import 'package:swifty_companion/Widgets/available.dart';
+import 'package:swifty_companion/Widgets/avatar.dart';
+import 'package:swifty_companion/Widgets/coalition.dart';
+import 'package:swifty_companion/Widgets/Header.dart';
+import 'package:swifty_companion/Widgets/level.dart';
+import 'package:swifty_companion/Widgets/projects.dart';
+import 'package:swifty_companion/Widgets/skills.dart';
+import 'package:swifty_companion/Widgets/userInfo.dart';
+import 'package:swifty_companion/services/user.dart';
 
 class ProfilePage extends StatefulWidget {
-  final userData;
-  ProfilePage(
-    User this.userData, {
+  final User userData;
+  const ProfilePage(
+    this.userData, {
     Key? key,
   }) : super(key: key);
   @override
@@ -23,14 +44,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  // ignore: prefer_final_fields
   bool _isLoading = false;
-  User user = User(null, null, null);
-  void initState() {
-    super.initState();
-    user = widget.userData;
-  }
+  @override
 
-  // set userVal(User value) => setState(() => user = widget.userData);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,17 +78,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: NetworkImage(widget.userData
-                                            .coalition != null ? widget.userData
-                                            .coalition[0]['cover_url'] :
-                                        'https://cdn.intra.42.fr/coalition/cover/69/federation_background.jpg'),
+                                    image: NetworkImage(widget
+                                                    .userData.coalition !=
+                                                null &&
+                                            widget.userData.coalition[0]
+                                                    ['cover_url'] !=
+                                                null
+                                        ? widget.userData.coalition[0]
+                                            ['cover_url']
+                                        : 'https://cdn.intra.42.fr/coalition/cover/69/federation_background.jpg'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                                 child: Avatar(
-                                    imageUrl: user.user['image_url'].toString(),
+                                    imageUrl: widget.userData.user['image_url'].toString(),
                                     displayName:
-                                        user.user['displayname'].toString()),
+                                        widget.userData.user['displayname'].toString()),
                               ),
                               Coalition(user: widget.userData),
                             ],
@@ -79,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Level(user: user.user),
+                          Level(user: widget.userData),
                           const SizedBox(
                             height: 10,
                           ),
@@ -89,35 +111,22 @@ class _ProfilePageState extends State<ProfilePage> {
                               shrinkWrap: true,
                               // physics: NeverScrollableScrollPhysics(),
                               children: [
-                                Available(user: user.user),
+                                Available(user: widget.userData),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                UserInfo(user: user.user),
+                                UserInfo(user: widget.userData),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Projects(user: user.user),
+                                Projects(user: widget.userData),
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Skills(user: user.user),
+                                Skills(user: widget.userData),
                               ],
                             ),
                           ),
-                          // Available(user: user.user),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
-                          // UserInfo(user: user.user),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Projects(user: user.user),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Skills(user: user.user,),
                         ]),
                   )
                 ],

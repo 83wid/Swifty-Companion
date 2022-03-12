@@ -1,12 +1,13 @@
 //Import the client you need (see later for available clients)...
+import 'package:flutter/material.dart';
 import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_client.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
-import 'package:swiftyCompanion/services/User.dart';
-import 'package:swiftyCompanion/services/coalition.dart';
+import 'package:swifty_companion/services/user.dart';
+import 'package:swifty_companion/services/coalition.dart';
 
 class MyClient extends OAuth2Client {
   MyClient({required String redirectUri, required String customUriScheme})
@@ -19,7 +20,6 @@ class MyClient extends OAuth2Client {
             customUriScheme: customUriScheme);
 }
 
-//https://api.intra.42.fr/oauth/token/info
 Future<AccessTokenResponse> getAccess(token) async {
 //Instantiate the client
   if (token.accessToken != null && token.isExpired() == false) {
@@ -46,30 +46,33 @@ Future<AccessTokenResponse> getAccess(token) async {
 
 dynamic auth() async {
   final result = await FlutterWebAuth.authenticate(
-    url:
-        "https://api.intra.42.fr/oauth/authorize?client_id=99d29e146f98b61033acb008b5e121c9ce157eb1e23bead0905ad39fa0f9e2de&redirect_uri=swifty.companion.app%3A%2F%2Fcallback&response_type=code",
+    url: dotenv.env['API_URI']! +
+        "/oauth/authorize?client_id=" +
+        dotenv.env['CLIENT_UID']! +
+        "&redirect_uri=" +
+        dotenv.env['REDIRECT_URI']! +
+        "&response_type=code",
     callbackUrlScheme: "swifty.companion.app",
   );
-  // print(result);
-  // print(result.substring(result.indexOf('=') + 1, result.length));
-  final res =
-      await http.post(Uri.parse("https://api.intra.42.fr/oauth/token"), body: {
+  final res = await http
+      .post(Uri.parse(dotenv.env['API_URI']! + "/oauth/token"), body: {
     "grant_type": 'authorization_code',
-    "client_id":
-        '99d29e146f98b61033acb008b5e121c9ce157eb1e23bead0905ad39fa0f9e2de', //Your client id
-    "client_secret":
-        'df45d3f521600600b726ef26338ace26095d96f348cd91cd0dbcdd10cae681af', //Your client secret
+    "client_id": dotenv.env['CLIENT_UID'], //Your client id
+    "client_secret": dotenv.env['CLIENT_SECRET'], //Your client secret
     "code": result.substring(result.indexOf('=') + 1, result.length),
-    "redirect_uri": 'swifty.companion.app://callback',
+    "redirect_uri": dotenv.env['REDIRECT_URI'],
   });
+  // print();
   final token = json.decode(res.body);
   final userData = await getUserData(null, token);
   final userCoalition = await getCoalition(userData, token);
-  return User(userData, token, userCoalition);
+  return User(userData, token, userCoalition,
+      HexColor.fromHex((userCoalition[0]['color'])));
 }
 
 dynamic searchUserData(userId, user) async {
-  if (userId != null && userId.contains(RegExp(r'[A-Z]', caseSensitive: false)) == false) {
+  if (userId != null &&
+      userId.contains(RegExp(r'[A-Z]', caseSensitive: false)) == false) {
     return null;
   }
   final userData = await getUserData(userId, user.token);
@@ -78,7 +81,23 @@ dynamic searchUserData(userId, user) async {
   }
   final userCoalition = await getCoalition(userData, user.token);
   if (userCoalition.length == 0) {
-    return User(userData, user.token, null);
+    return User(userData, user.token, null, Colors.blue);
   }
-  return User(userData, user.token, userCoalition);
+  return User(userData, user.token, userCoalition,
+      HexColor.fromHex((userCoalition[0]['color'])));
+}
+
+extension HexColor on Color {
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${alpha.toRadixString(16).padLeft(2, '0')}'
+      '${red.toRadixString(16).padLeft(2, '0')}'
+      '${green.toRadixString(16).padLeft(2, '0')}'
+      '${blue.toRadixString(16).padLeft(2, '0')}';
 }

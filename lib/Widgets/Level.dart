@@ -1,9 +1,12 @@
+// ignore_for_file: file_names,
 import 'package:flutter/material.dart';
-import 'package:swiftyCompanion/services/cursus.dart';
+import 'package:swifty_companion/services/cursus.dart';
+import 'package:swifty_companion/services/user.dart';
 
 class Level extends StatefulWidget {
   const Level({Key? key, required this.user}) : super(key: key);
-  final user;
+  // ignore: prefer_typing_uninitialized_variables
+  final User user;
   @override
   State<Level> createState() => _LevelState();
 }
@@ -11,7 +14,8 @@ class Level extends StatefulWidget {
 class _LevelState extends State<Level> {
   @override
   Widget build(BuildContext context) {
-    String slevel = getCursus(widget.user['cursus_users'])['level'].toString();
+    String slevel =
+        getCursus(widget.user.user['cursus_users'])['level'].toString();
     double level = double.parse(slevel);
     final textStyle = TextStyle(
       fontSize: MediaQuery.of(context).size.width / 35,
@@ -21,7 +25,7 @@ class _LevelState extends State<Level> {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.green.shade300,
+            color: widget.user.color.withOpacity(0.4),
           ),
           height: MediaQuery.of(context).size.height / 20,
           width:
@@ -30,7 +34,7 @@ class _LevelState extends State<Level> {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.blue, width: 2),
+            border: Border.all(color: widget.user.color, width: 2),
           ),
           height: MediaQuery.of(context).size.height / 20,
           child: Center(

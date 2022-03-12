@@ -1,21 +1,35 @@
+// ignore_for_file: file_names,
 import 'package:flutter/material.dart';
-import 'package:swiftyCompanion/services/cursus.dart';
+import 'package:swifty_companion/services/cursus.dart';
 import 'package:radar_chart/radar_chart.dart';
 import 'dart:math';
-// import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 
-List<List<num>> serializeLevel(List levels) {
-  List<List<num>> serializedLevel = [];
-  for (int i = 0; i < levels.length; i++) {
-    List<num> l = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    l[i] = levels[i];
-    serializedLevel.add(l);
-  }
-  return serializedLevel;
-}
+List skillsNames = [
+  'Web',
+  'Adaptation & creativity',
+  'Algorithms & AI',
+  'Basics',
+  'Company experience',
+  'DB & Data',
+  'Functional programming',
+  'Graphics',
+  'Group & interpersonal',
+  'Imperative programming',
+  'Network & system administration',
+  'Object-oriented programming',
+  'Organization',
+  'Parallel programming',
+  'Rigor',
+  'Ruby',
+  'Security',
+  'Shell',
+  'Technology integration',
+  'Unix'
+];
 
 class Skills extends StatefulWidget {
-  Skills({Key? key, required this.user}) : super(key: key);
+  const Skills({Key? key, required this.user}) : super(key: key);
+  // ignore: prefer_typing_uninitialized_variables
   final user;
   @override
   _SkillsState createState() => _SkillsState();
@@ -24,33 +38,63 @@ class Skills extends StatefulWidget {
 class _SkillsState extends State<Skills> {
   @override
   Widget build(BuildContext context) {
+    List<double> skillsLevel = [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+    ];
     final skills =
-        getCursus(widget.user['cursus_users'])['skills'] as List<dynamic>;
-    final skillNames = List<String>.from(skills.map((skill) => skill['name']));
-    List<double> list1 =
-        List<double>.from(skills.map((skill) => skill['level'] / 10));
+        getCursus(widget.user.user['cursus_users'])['skills'] as List<dynamic>;
+        // print(getCursus(widget.user.user['cursus_users']));
+    for (var element in skills) {
+      if (skillsNames.contains(element['name'])) {
+        // if (element['name'] == 'Adaptation & creativity') print(element['level']);
+      // print(skillsNames[skillsNames.indexOf(element['name'])]);
+        setState(() {
+          skillsLevel[skillsNames.indexOf(element['name'])] = element['level'] / 15;
+        });
+      }
+    }
+    // print(skillsLevel);
     return SizedBox(
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width,
       child: Center(
-        child: 
-        RadarChart(
-          length: list1.length,
+        child: RadarChart(
+          length: skillsNames.length,
           radius: MediaQuery.of(context).size.width / 3.5,
-          initialAngle : pi / 2,
-          backgroundColor: Colors.grey.shade800,
-          // borderStroke: 10,
-          borderColor: Colors.blue,
+          initialAngle: -pi / 2,
+          backgroundColor: Colors.grey.withOpacity(0),
+          borderStroke: 2,
+          borderColor: Colors.grey.shade600,
           radialStroke: 1,
-          radialColor: Colors.blue,
+          radialColor: Colors.grey.shade600,
           vertices: [
-            for (int i = 0; i < skillNames.length; i++)
+            for (int i = 0; i < skillsNames.length; i++)
               RadarVertex(
                 radius: 10,
                 // textOffset: Offset(10, 10),
-                text: Text(skillNames[i] + '\n' + (list1[i] * 21).toStringAsFixed(2),
-                    style: const TextStyle(
-                        fontSize: 10,
+                text: Text(
+                    skillsNames[i] + '\n' + (skillsLevel[i] * 15).toStringAsFixed(2),
+                    style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width / 60,
                         fontWeight: FontWeight.bold,
                         color: Colors.white)),
               ),
@@ -58,10 +102,10 @@ class _SkillsState extends State<Skills> {
           radars: [
             RadarTile(
               radialColor: Colors.red,
-              values: list1,
-              borderStroke: 2,
-              borderColor: Colors.yellow,
-              backgroundColor: Colors.green.withOpacity(0.4),
+              values: skillsLevel,
+              borderStroke: 3,
+              borderColor: widget.user.color,
+              backgroundColor: widget.user.color.withOpacity(0.4),
             ),
           ],
         ),
@@ -71,11 +115,11 @@ class _SkillsState extends State<Skills> {
 }
 
 class RadarVertex extends StatelessWidget with PreferredSizeWidget {
-  const RadarVertex({
+  const RadarVertex({Key? key,
     required this.radius,
     this.text,
     this.textOffset,
-  });
+  }) : super(key: key);
 
   final double radius;
   final Widget? text;
@@ -91,13 +135,16 @@ class RadarVertex extends StatelessWidget with PreferredSizeWidget {
       backgroundColor: Colors.green.withOpacity(0),
     );
     if (text != null) {
-      tree = Stack(
-        children: [
-          tree,
-          Center(
-            child: text,
-          )
-        ],
+      tree = SizedBox(
+        width: MediaQuery.of(context).size.width / 9,
+        child: Stack(
+          children: [
+            tree,
+            Center(
+              child: text,
+            )
+          ],
+        ),
       );
     }
     return tree;

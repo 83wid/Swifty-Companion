@@ -1,3 +1,5 @@
+// ignore_for_file: file_names,
+
 import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
@@ -20,7 +22,7 @@ class Avatar extends StatelessWidget {
               width: 2,
             ),
             image: DecorationImage(
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               image: NetworkImage(
                 imageUrl,
               ),

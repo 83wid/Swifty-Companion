@@ -1,8 +1,10 @@
+// ignore_for_file: file_names,
 import 'package:flutter/material.dart';
+import 'package:swifty_companion/services/user.dart';
 
 class Available extends StatelessWidget {
   const Available({Key? key, required this.user}) : super(key: key);
-  final user;
+  final User user;
   @override
   Widget build(BuildContext context) {
     final textStyle = TextStyle(
@@ -13,7 +15,7 @@ class Available extends StatelessWidget {
       height: MediaQuery.of(context).size.height / 10,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.blue, width: 2),
+        border: Border.all(color: user.color, width: 2),
         color: const Color(0xff292a2d),
       ),
       child: Center(
@@ -21,10 +23,10 @@ class Available extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            user['location'] != null ? 'Available' : 'UnAvailable',
+            user.user['location'] != null ? 'Available' : 'UnAvailable',
             style: textStyle,
           ),
-          Text(user['location'] != null ? user['location'].toString() : '_',
+          Text(user.user['location'] != null ? user.user['location'].toString() : '_',
               style: textStyle),
         ],
       )),

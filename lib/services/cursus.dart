@@ -10,14 +10,17 @@ class Cursus {
 
 dynamic getCursus(cursusUsers) {
   // print(cursusUsers);
-  var cursus;
   if (cursusUsers.length == 1) {
-    cursus = cursusUsers[0];
+    return cursusUsers[0];
   }
-  else if (cursusUsers[0] != null && (cursusUsers[0]['cursus_id'] == 1 || cursusUsers[0]['cursus_id'] == 21)) {
-    cursus = cursusUsers[0];
+  for (var i = 0; i < cursusUsers.length; i++) {
+    if (cursusUsers[i]['cursus_id'] == 21) {
+      return cursusUsers[i];
+    }
+  }
+  if (cursusUsers[0]['cursus_id'] == 1) {
+    return cursusUsers[0];
   } else {
-    cursus = cursusUsers[1];
+    return cursusUsers[1];
   }
-  return cursus;
 }

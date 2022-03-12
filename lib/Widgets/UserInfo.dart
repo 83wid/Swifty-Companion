@@ -1,9 +1,11 @@
+// ignore_for_file: file_names,
 import 'package:flutter/material.dart';
-import 'package:swiftyCompanion/services/cursus.dart';
+import 'package:swifty_companion/services/user.dart';
+import 'package:swifty_companion/services/cursus.dart';
 
 class UserInfo extends StatefulWidget {
   const UserInfo({Key? key, required this.user}) : super(key: key);
-  final user;
+  final User user;
   @override
   State<UserInfo> createState() => _UserInfoState();
 }
@@ -29,7 +31,7 @@ class _UserInfoState extends State<UserInfo> {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.blue, width: 2),
+          border: Border.all(color: widget.user.color, width: 2),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -48,9 +50,9 @@ class _UserInfoState extends State<UserInfo> {
                     style: textStyle,
                   ),
                 ),
-                widget.user['correction_point'] != null
+                widget.user.user['correction_point'] != null
                     ? Text(
-                        widget.user['correction_point'].toString(),
+                        widget.user.user['correction_point'].toString(),
                         style: textStyle,
                       )
                     : const SizedBox(),
@@ -69,9 +71,9 @@ class _UserInfoState extends State<UserInfo> {
                     style: textStyle,
                   ),
                 ),
-                widget.user['email'] != null
+                widget.user.user['email'] != null
                     ? Text(
-                        widget.user['email'].toString(),
+                        widget.user.user['email'].toString(),
                         style: textStyle,
                       )
                     : const SizedBox(),
@@ -90,9 +92,9 @@ class _UserInfoState extends State<UserInfo> {
                     style: textStyle,
                   ),
                 ),
-                widget.user['wallet'] != null
+                widget.user.user['wallet'] != null
                     ? Text(
-                        widget.user['wallet'].toString(),
+                        widget.user.user['wallet'].toString(),
                         style: textStyle,
                       )
                     : const SizedBox(),
@@ -112,7 +114,7 @@ class _UserInfoState extends State<UserInfo> {
                   ),
                 ),
                 Text(
-                  getCursus(widget.user['cursus_users'])['cursus']['name'],
+                  getCursus(widget.user.user['cursus_users'])['cursus']['name'],
                   style: textStyle,
                 ),
               ],
@@ -131,7 +133,7 @@ class _UserInfoState extends State<UserInfo> {
                   ),
                 ),
                 Text(
-                  getCursus(widget.user['cursus_users'])['grade'] ?? '-',
+                  getCursus(widget.user.user['cursus_users'])['grade'] ?? '-',
                   style: textStyle,
                 ),
               ],
