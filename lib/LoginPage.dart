@@ -5,7 +5,9 @@ import 'package:swifty_companion/services/user.dart';
 import 'package:swifty_companion/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key,}) : super(key: key);
+  const LoginPage({
+    Key? key,
+  }) : super(key: key);
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -26,10 +28,9 @@ class _LoginPageState extends State<LoginPage> {
                   )
                 ]
               : [
-                  Image.asset('images/42.png'),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height / 15,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    height: MediaQuery.of(context).size.height / 10,
                     child: TextButton(
                       style: ButtonStyle(
                         foregroundColor:
@@ -56,10 +57,18 @@ class _LoginPageState extends State<LoginPage> {
                                   builder: (context) => ProfilePage(result)));
                         }
                       },
-                      child: const Center(
-                          child: Text(
-                        'Login',
-                        style: TextStyle(color: Colors.white),
+                      child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image.asset('images/42_dark.png'),
+                          const Text(
+                            'Authenticate with Intranet',
+                            style: TextStyle(color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       )),
                     ),
                   ),

@@ -20,31 +20,37 @@ class _LevelState extends State<Level> {
     final textStyle = TextStyle(
       fontSize: MediaQuery.of(context).size.width / 35,
     );
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: widget.user.color.withOpacity(0.4),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.black.withOpacity(0.2),
+      ),
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: widget.user.color.withOpacity(0.4),
+            ),
+            height: MediaQuery.of(context).size.height / 20,
+            width: MediaQuery.of(context).size.width *
+                (level - level.floor()).abs(),
           ),
-          height: MediaQuery.of(context).size.height / 20,
-          width:
-              MediaQuery.of(context).size.width * (level - level.floor()).abs(),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: widget.user.color, width: 2),
-          ),
-          height: MediaQuery.of(context).size.height / 20,
-          child: Center(
-            child: Text(
-              slevel.toString(),
-              style: textStyle,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: widget.user.color, width: 2),
+            ),
+            height: MediaQuery.of(context).size.height / 20,
+            child: Center(
+              child: Text(
+                slevel.toString(),
+                style: textStyle,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

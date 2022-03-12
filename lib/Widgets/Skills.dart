@@ -73,42 +73,58 @@ class _SkillsState extends State<Skills> {
       }
     }
     // print(skillsLevel);
-    return SizedBox(
+    return Container(
+      color: Colors.black.withOpacity(0.2),
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width,
-      child: Center(
-        child: RadarChart(
-          length: skillsNames.length,
-          radius: MediaQuery.of(context).size.width / 3.5,
-          initialAngle: -pi / 2,
-          backgroundColor: Colors.grey.withOpacity(0),
-          borderStroke: 2,
-          borderColor: Colors.grey.shade600,
-          radialStroke: 1,
-          radialColor: Colors.grey.shade600,
-          vertices: [
-            for (int i = 0; i < skillsNames.length; i++)
-              RadarVertex(
-                radius: 10,
-                // textOffset: Offset(10, 10),
-                text: Text(
-                    skillsNames[i] + '\n' + (skillsLevel[i] * 15).toStringAsFixed(2),
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width / 60,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
-              ),
-          ],
-          radars: [
-            RadarTile(
-              radialColor: Colors.red,
-              values: skillsLevel,
-              borderStroke: 3,
-              borderColor: widget.user.color,
-              backgroundColor: widget.user.color.withOpacity(0.4),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width / 100),
+          child: Text(
+            'Skills',
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width / 35,
             ),
-          ],
+          ),
         ),
+          Center(
+            child: RadarChart(
+              length: skillsNames.length,
+              radius: MediaQuery.of(context).size.width / 3,
+              initialAngle: -pi / 2,
+              backgroundColor: Colors.grey.withOpacity(0),
+              borderStroke: 2,
+              borderColor: Colors.grey.shade600,
+              radialStroke: 1,
+              radialColor: Colors.grey.shade600,
+              vertices: [
+                for (int i = 0; i < skillsNames.length; i++)
+                  RadarVertex(
+                    radius: 10,
+                    // textOffset: Offset(10, 10),
+                    text: Text(
+                        skillsNames[i] + '\n' + (skillsLevel[i] * 15).toStringAsFixed(2),
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width / 60,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white)),
+                  ),
+              ],
+              radars: [
+                RadarTile(
+                  radialColor: Colors.red,
+                  values: skillsLevel,
+                  borderStroke: 3,
+                  borderColor: widget.user.color,
+                  backgroundColor: widget.user.color.withOpacity(0.4),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height:  MediaQuery.of(context).size.height / 100,)
+        ],
       ),
     );
   }

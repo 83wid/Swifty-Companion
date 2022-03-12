@@ -18,7 +18,7 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: widget.user.color.withOpacity(0.2),
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 2.0, right: 2),
@@ -52,7 +52,7 @@ class _HeaderState extends State<Header> {
               },
               child: _isLoading
                   ? const CircularProgressIndicator()
-                  : Image.asset('images/42.png',
+                  : Image.asset('images/42_dark.png',
                       width: MediaQuery.of(context).size.width / 8,
                       fit: BoxFit.contain),
             ),

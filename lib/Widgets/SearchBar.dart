@@ -26,7 +26,7 @@ class _SearchBarState extends State<SearchBar> {
             height: MediaQuery.of(context).size.height / 20,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.green.shade300, width: 2),
+              border: Border.all(color: widget.user.color, width: 2),
               // color: Colors.white,
             ),
             child: TextFormField(
@@ -47,10 +47,10 @@ class _SearchBarState extends State<SearchBar> {
                 ? const SizedBox(child: CircularProgressIndicator())
                 : TextButton(
                     style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                      backgroundColor: MaterialStateProperty.all(Colors.black),
+                      foregroundColor: MaterialStateProperty.all(widget.user.color.withOpacity(0.8)),
+                      backgroundColor: MaterialStateProperty.all(widget.user.color.withOpacity(0.5)),
                       overlayColor:
-                          MaterialStateProperty.all(Colors.grey.shade700),
+                          MaterialStateProperty.all(widget.user.color),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -136,10 +136,10 @@ class _SearchBarState extends State<SearchBar> {
                         _isLoading = false;
                       });
                     },
-                    child: const Center(
+                    child:  Center(
                         child: Text(
                       'search',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: widget.user.color),
                     )),
                   ),
           ),
