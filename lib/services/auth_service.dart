@@ -84,7 +84,7 @@ dynamic searchUserData(userId, user) async {
     return User(userData, user.token, null, Colors.blue);
   }
   return User(userData, user.token, userCoalition,
-      HexColor.fromHex((userCoalition[0]['color'])));
+      HexColor.fromHex((userCoalition[0]['color'] ?? '#000000')));
 }
 
 extension HexColor on Color {
