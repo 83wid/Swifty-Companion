@@ -17,13 +17,11 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     TextEditingController loginController = TextEditingController();
     return SizedBox(
-      width: 2 * MediaQuery.of(context).size.width / 3,
-      height: MediaQuery.of(context).size.height / 12,
-      child: Row(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Container(
-            width: MediaQuery.of(context).size.width / 2.5,
-            height: MediaQuery.of(context).size.height / 20,
+            height: MediaQuery.of(context).size.width / 10,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: widget.user.color, width: 2),
@@ -38,17 +36,17 @@ class _SearchBarState extends State<SearchBar> {
               ),
             ),
           ),
+          SizedBox(height: MediaQuery.of(context).size.width / 20,),
           SizedBox(
-            width: MediaQuery.of(context).size.width / 100,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 20,
+            height: MediaQuery.of(context).size.width / 10,
             child: _isLoading
                 ? const SizedBox(child: CircularProgressIndicator())
                 : TextButton(
                     style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all(widget.user.color.withOpacity(0.8)),
-                      backgroundColor: MaterialStateProperty.all(widget.user.color.withOpacity(0.5)),
+                      foregroundColor: MaterialStateProperty.all(
+                          widget.user.color.withOpacity(0.8)),
+                      backgroundColor: MaterialStateProperty.all(
+                          widget.user.color.withOpacity(0.5)),
                       overlayColor:
                           MaterialStateProperty.all(widget.user.color),
                       shape: MaterialStateProperty.all(
@@ -67,7 +65,7 @@ class _SearchBarState extends State<SearchBar> {
                           final userData = await searchUserData(
                               loginController.text, widget.user);
                           if (userData != null) {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ProfilePage(
@@ -136,7 +134,7 @@ class _SearchBarState extends State<SearchBar> {
                         _isLoading = false;
                       });
                     },
-                    child:  Center(
+                    child: Center(
                         child: Text(
                       'search',
                       style: TextStyle(color: widget.user.color),

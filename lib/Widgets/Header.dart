@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/profilePage.dart';
 import 'package:swifty_companion/Widgets/SearchBar.dart';
+import 'package:swifty_companion/searchPage.dart';
 import 'package:swifty_companion/services/auth_service.dart';
 import 'package:swifty_companion/services/user.dart';
 
@@ -56,9 +57,23 @@ class _HeaderState extends State<Header> {
                       width: MediaQuery.of(context).size.width / 8,
                       fit: BoxFit.contain),
             ),
-            SearchBar(
-              user: widget.user,
-            ),
+            TextButton(
+              child: Icon(
+                Icons.search,
+                color: widget.user.color,
+              ),
+              onPressed: () => Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SearchPage(
+                    widget.user,
+                  ),
+                ),
+              ),
+            )
+            // SearchBar(
+            //   user: widget.user,
+            // ),
           ],
         ),
       ),

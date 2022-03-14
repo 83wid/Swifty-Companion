@@ -16,7 +16,7 @@ class Available extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: user.color, width: 2),
-        color: const Color(0xff292a2d),
+        color: const Color(0xff292a2d).withOpacity(0.4),
       ),
       child: Center(
           child: Column(

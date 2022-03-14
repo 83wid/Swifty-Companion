@@ -62,33 +62,38 @@ class _SkillsState extends State<Skills> {
     ];
     final skills =
         getCursus(widget.user.user['cursus_users'])['skills'] as List<dynamic>;
-        // print(getCursus(widget.user.user['cursus_users']));
+    // print(getCursus(widget.user.user['cursus_users']));
     for (var element in skills) {
       if (skillsNames.contains(element['name'])) {
         // if (element['name'] == 'Adaptation & creativity') print(element['level']);
-      // print(skillsNames[skillsNames.indexOf(element['name'])]);
+        // print(skillsNames[skillsNames.indexOf(element['name'])]);
         setState(() {
-          skillsLevel[skillsNames.indexOf(element['name'])] = element['level'] / 15;
+          skillsLevel[skillsNames.indexOf(element['name'])] =
+              element['level'] / 15;
         });
       }
     }
     // print(skillsLevel);
     return Container(
-      color: Colors.black.withOpacity(0.2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: widget.user.color, width: 2),
+        color: Colors.black.withOpacity(0.2),
+      ),
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-          padding: EdgeInsets.all(MediaQuery.of(context).size.width / 100),
-          child: Text(
-            'Skills',
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width / 35,
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 100),
+            child: Text(
+              'Skills',
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width / 35,
+              ),
             ),
           ),
-        ),
           Center(
             child: RadarChart(
               length: skillsNames.length,
@@ -105,7 +110,9 @@ class _SkillsState extends State<Skills> {
                     radius: 10,
                     // textOffset: Offset(10, 10),
                     text: Text(
-                        skillsNames[i] + '\n' + (skillsLevel[i] * 15).toStringAsFixed(2),
+                        skillsNames[i] +
+                            '\n' +
+                            (skillsLevel[i] * 15).toStringAsFixed(2),
                         style: TextStyle(
                             fontSize: MediaQuery.of(context).size.width / 60,
                             fontWeight: FontWeight.bold,
@@ -123,7 +130,9 @@ class _SkillsState extends State<Skills> {
               ],
             ),
           ),
-          SizedBox(height:  MediaQuery.of(context).size.height / 100,)
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 100,
+          )
         ],
       ),
     );
@@ -131,7 +140,8 @@ class _SkillsState extends State<Skills> {
 }
 
 class RadarVertex extends StatelessWidget with PreferredSizeWidget {
-  const RadarVertex({Key? key,
+  const RadarVertex({
+    Key? key,
     required this.radius,
     this.text,
     this.textOffset,
