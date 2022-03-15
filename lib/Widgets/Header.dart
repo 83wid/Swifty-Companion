@@ -62,7 +62,7 @@ class _HeaderState extends State<Header> {
                 Icons.search,
                 color: widget.user.color,
               ),
-              onPressed: () => Navigator.pushReplacement(
+              onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => SearchPage(

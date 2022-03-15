@@ -65,8 +65,6 @@ class _SkillsState extends State<Skills> {
     // print(getCursus(widget.user.user['cursus_users']));
     for (var element in skills) {
       if (skillsNames.contains(element['name'])) {
-        // if (element['name'] == 'Adaptation & creativity') print(element['level']);
-        // print(skillsNames[skillsNames.indexOf(element['name'])]);
         setState(() {
           skillsLevel[skillsNames.indexOf(element['name'])] =
               element['level'] / 15;

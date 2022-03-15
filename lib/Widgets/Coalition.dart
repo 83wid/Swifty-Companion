@@ -78,6 +78,7 @@ class Coalition extends StatelessWidget {
                     ),
                     Text(
                       user.coalition[0]['name'],
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: MediaQuery.of(context).size.width / 60),

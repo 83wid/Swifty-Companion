@@ -10,6 +10,17 @@ class Cursus {
 
 dynamic getCursus(cursusUsers) {
   // print(cursusUsers);
+  if (cursusUsers.isEmpty) {
+    return {
+      'cursus': {
+        'name': '-',
+      },
+      'grade': null,
+      'level': 0.0,
+      'id': 0,
+      'skills': [],
+    };
+  }
   if (cursusUsers.length == 1) {
     return cursusUsers[0];
   }

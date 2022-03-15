@@ -9,40 +9,40 @@ import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:swifty_companion/services/user.dart';
 import 'package:swifty_companion/services/coalition.dart';
 
-class MyClient extends OAuth2Client {
-  MyClient({required String redirectUri, required String customUriScheme})
-      : super(
-            authorizeUrl: 'https://api.intra.42.fr'
-                '/oauth/authorize', //Your service's authorization url
-            tokenUrl: 'https://api.intra.42.fr'
-                '/oauth/token', //Your service access token url
-            redirectUri: redirectUri,
-            customUriScheme: customUriScheme);
-}
-
-Future<AccessTokenResponse> getAccess(token) async {
-//Instantiate the client
-  if (token.accessToken != null && token.isExpired() == false) {
-    return token;
-  }
-  // print(token);
-  final client = MyClient(
-      redirectUri: 'swifty.companion.app://callback',
-      customUriScheme: 'swifty.companion.app');
-
-// Request a token using the Client Credentials flow...
-  AccessTokenResponse tknResp = await client.getTokenWithClientCredentialsFlow(
-      clientId:
-          '99d29e146f98b61033acb008b5e121c9ce157eb1e23bead0905ad39fa0f9e2de', //Your client id
-      clientSecret: 'df45d3f521600600b726ef26338ace26095d96f348cd91cd0dbcdd10cae681af', //Your client secret
-      scopes: ['public'] //Optional
-      );
-  return tknResp;
-//Or, if you already have a token, check if it is expired and in case refresh it...
-// if(tknResp.isExpired()) {
-// 	tknResp = client.refreshToken(tknResp.refreshToken) ?? '';
+// class MyClient extends OAuth2Client {
+//   MyClient({required String redirectUri, required String customUriScheme})
+//       : super(
+//             authorizeUrl: 'https://api.intra.42.fr'
+//                 '/oauth/authorize', //Your service's authorization url
+//             tokenUrl: 'https://api.intra.42.fr'
+//                 '/oauth/token', //Your service access token url
+//             redirectUri: redirectUri,
+//             customUriScheme: customUriScheme);
 // }
-}
+
+// Future<AccessTokenResponse> getAccess(token) async {
+// //Instantiate the client
+//   if (token.accessToken != null && token.isExpired() == false) {
+//     return token;
+//   }
+//   // print(token);
+//   final client = MyClient(
+//       redirectUri: 'swifty.companion.app://callback',
+//       customUriScheme: 'swifty.companion.app');
+
+// // Request a token using the Client Credentials flow...
+//   AccessTokenResponse tknResp = await client.getTokenWithClientCredentialsFlow(
+//       clientId:
+//           '99d29e146f98b61033acb008b5e121c9ce157eb1e23bead0905ad39fa0f9e2de', //Your client id
+//       clientSecret: 'df45d3f521600600b726ef26338ace26095d96f348cd91cd0dbcdd10cae681af', //Your client secret
+//       scopes: ['public'] //Optional
+//       );
+//   return tknResp;
+// //Or, if you already have a token, check if it is expired and in case refresh it...
+// // if(tknResp.isExpired()) {
+// // 	tknResp = client.refreshToken(tknResp.refreshToken) ?? '';
+// // }
+// }
 
 dynamic auth() async {
   final result = await FlutterWebAuth.authenticate(
@@ -80,7 +80,7 @@ dynamic searchUserData(userId, user) async {
     return null;
   }
   final userCoalition = await getCoalition(userData, user.token);
-  if (userCoalition.length == 0) {
+  if (userCoalition == null || userCoalition.length == 0) {
     return User(userData, user.token, null, Colors.blue);
   }
   return User(userData, user.token, userCoalition,
