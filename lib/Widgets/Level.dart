@@ -15,7 +15,7 @@ class _LevelState extends State<Level> {
   @override
   Widget build(BuildContext context) {
     String slevel =
-        getCursus(widget.user.user['cursus_users'])['level'].toString();
+        getCursus(widget.user.user)['level'].toString();
     double level = double.parse(slevel);
     final textStyle = TextStyle(
       fontSize: MediaQuery.of(context).size.width / 35,

@@ -61,7 +61,7 @@ class _SkillsState extends State<Skills> {
       0.0,
     ];
     final skills =
-        getCursus(widget.user.user['cursus_users'])['skills'] as List<dynamic>;
+        getCursus(widget.user.user)['skills'] as List<dynamic>;
     // print(getCursus(widget.user.user['cursus_users']));
     for (var element in skills) {
       if (skillsNames.contains(element['name'])) {

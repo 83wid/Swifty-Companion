@@ -8,9 +8,10 @@ class Cursus {
   Cursus.fromJson(Map json) : cursus = json['cursus_users'];
 }
 
-dynamic getCursus(cursusUsers) {
+dynamic getCursus(user) {
+  final cursusUsers = Cursus.fromJson(user).cursus;
   // print(cursusUsers);
-  if (cursusUsers.isEmpty) {
+  if (cursusUsers == null || cursusUsers.isEmpty) {
     return {
       'cursus': {
         'name': '-',

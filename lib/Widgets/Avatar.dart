@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 dynamic validImageUrl(avatarUri) async {
+  if (avatarUri == null) {
+    return 404;
+  }
   final response = await http.get(Uri.parse(avatarUri));
   return response.statusCode;
 }

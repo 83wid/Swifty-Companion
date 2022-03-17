@@ -1,7 +1,5 @@
 //Import the client you need (see later for available clients)...
 import 'package:flutter/material.dart';
-import 'package:oauth2_client/access_token_response.dart';
-import 'package:oauth2_client/oauth2_client.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -9,40 +7,33 @@ import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:swifty_companion/services/user.dart';
 import 'package:swifty_companion/services/coalition.dart';
 
-// class MyClient extends OAuth2Client {
-//   MyClient({required String redirectUri, required String customUriScheme})
-//       : super(
-//             authorizeUrl: 'https://api.intra.42.fr'
-//                 '/oauth/authorize', //Your service's authorization url
-//             tokenUrl: 'https://api.intra.42.fr'
-//                 '/oauth/token', //Your service access token url
-//             redirectUri: redirectUri,
-//             customUriScheme: customUriScheme);
-// }
-
-// Future<AccessTokenResponse> getAccess(token) async {
-// //Instantiate the client
-//   if (token.accessToken != null && token.isExpired() == false) {
-//     return token;
-//   }
-//   // print(token);
-//   final client = MyClient(
-//       redirectUri: 'swifty.companion.app://callback',
-//       customUriScheme: 'swifty.companion.app');
-
-// // Request a token using the Client Credentials flow...
-//   AccessTokenResponse tknResp = await client.getTokenWithClientCredentialsFlow(
-//       clientId:
-//           '99d29e146f98b61033acb008b5e121c9ce157eb1e23bead0905ad39fa0f9e2de', //Your client id
-//       clientSecret: 'df45d3f521600600b726ef26338ace26095d96f348cd91cd0dbcdd10cae681af', //Your client secret
-//       scopes: ['public'] //Optional
-//       );
-//   return tknResp;
-// //Or, if you already have a token, check if it is expired and in case refresh it...
-// // if(tknResp.isExpired()) {
-// // 	tknResp = client.refreshToken(tknResp.refreshToken) ?? '';
-// // }
-// }
+dynamic checkToken(token) async {
+  final String url = dotenv.env['API_URI']! + '/oauth/token/info';
+  final Map<String, String> headers = {
+    'Authorization': 'Bearer ${token['access_token']}',
+    'Content-Type': 'application/json',
+  };
+  final response = await http.get(Uri.parse(url), headers: headers);
+  final Map<String, dynamic> data = json.decode(response.body);
+  if (response.statusCode == 200 && data['expires_in_seconds'] != 0) {
+    final res =
+        await http.post(Uri.parse(dotenv.env['API_URI']! + '/oauth/token'),
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: json.encode({
+              "grant_type": 'authorization_code',
+              "client_id": dotenv.env['CLIENT_UID'], //Your client id
+              "client_secret": dotenv.env['CLIENT_SECRET'], //Your client secret
+              'code': token['refresh_token'],
+            }));
+    // print(json.decode(res.body));
+    print(res.statusCode);
+    print(res.body);
+  } else {
+    return null;
+  }
+}
 
 dynamic auth() async {
   final result = await FlutterWebAuth.authenticate(
@@ -62,7 +53,6 @@ dynamic auth() async {
     "code": result.substring(result.indexOf('=') + 1, result.length),
     "redirect_uri": dotenv.env['REDIRECT_URI'],
   });
-  // print();
   final token = json.decode(res.body);
   final userData = await getUserData(null, token);
   final userCoalition = await getCoalition(userData, token);
@@ -71,6 +61,9 @@ dynamic auth() async {
 }
 
 dynamic searchUserData(userId, user) async {
+  print(user.token['access_token']);
+  print(user.token['refresh_token']);
+  // checkToken(user.token);
   if (userId != null &&
       userId.contains(RegExp(r'[A-Z]', caseSensitive: false)) == false) {
     return null;
@@ -80,7 +73,9 @@ dynamic searchUserData(userId, user) async {
     return null;
   }
   final userCoalition = await getCoalition(userData, user.token);
-  if (userCoalition == null || userCoalition.length == 0) {
+  if (userCoalition == null ||
+      userCoalition.length == 0 ||
+      userCoalition[0] == null) {
     return User(userData, user.token, null, Colors.blue);
   }
   return User(userData, user.token, userCoalition,

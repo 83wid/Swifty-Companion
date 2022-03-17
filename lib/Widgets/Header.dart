@@ -1,7 +1,6 @@
 // ignore_for_file: file_names,
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/profilePage.dart';
-import 'package:swifty_companion/Widgets/SearchBar.dart';
 import 'package:swifty_companion/searchPage.dart';
 import 'package:swifty_companion/services/auth_service.dart';
 import 'package:swifty_companion/services/user.dart';

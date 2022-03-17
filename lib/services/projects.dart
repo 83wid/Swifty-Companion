@@ -18,7 +18,7 @@ dynamic allProjects(user) {
   dynamic ret = data.where((element) =>
       element['cursus_ids'].length != 0 &&
       element['cursus_ids'][0] ==
-          getCursus(user['cursus_users'])['cursus']['id'] &&
+          getCursus(user)['cursus']['id'] &&
       element['status'] == 'finished' &&
       element['project']['parent_id'] == null &&
       element['validated?'] != null);
