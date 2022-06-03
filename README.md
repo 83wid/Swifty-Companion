@@ -11,4 +11,4 @@ I choose to develop the app using Flutter.
 
 ### Here is the app
 
-![Alt Text](https://github.com/83wid/Swifty-Companion/blob/main/Gif/gif.gif)
+<img src="https://github.com/83wid/Swifty-Companion/blob/main/Gif/gif.gif" width="400"/>
