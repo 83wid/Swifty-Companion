@@ -1,16 +1,12 @@
 # app
 
-A new Flutter project.
+The aim of the projet is to build an application that will retrieve the information of 42 student,
+using the 42 API. An API (Application programming interface) is a set of routines, protocols,
+and tools for building software applications. APIs often come in the form of a library that includes specifications for routines, data structures, object classes, and variables. In other cases,
+notably SOAP and REST services, an API is simply a specification of remote calls exposed to
+the API consumers.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Stack
+I choose to develop the app using Flutter.
+Here is the app
+![Alt Text](https://github.com/83wid/Swifty-Companion/Gif/gif.gif)
