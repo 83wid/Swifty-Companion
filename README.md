@@ -8,5 +8,7 @@ the API consumers.
 
 ## Stack
 I choose to develop the app using Flutter.
-Here is the app
-![Alt Text](https://github.com/83wid/Swifty-Companion/Gif/gif.gif)
+
+### Here is the app
+
+![Alt Text](https://github.com/83wid/Swifty-Companion/blob/main/Gif/gif.gif)
