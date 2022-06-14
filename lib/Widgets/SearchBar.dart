@@ -36,11 +36,14 @@ class _SearchBarState extends State<SearchBar> {
               ),
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.width / 20,),
+          SizedBox(
+            height: MediaQuery.of(context).size.width / 20,
+          ),
           SizedBox(
             height: MediaQuery.of(context).size.width / 10,
             child: _isLoading
-                ? const SizedBox(child: CircularProgressIndicator())
+                ? const SizedBox(
+                    width: 40, height: 100, child: CircularProgressIndicator())
                 : TextButton(
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all(
@@ -63,7 +66,7 @@ class _SearchBarState extends State<SearchBar> {
                         if (loginController.text[0]
                             .contains(RegExp(r'[A-Z]', caseSensitive: false))) {
                           final userData = await searchUserData(
-                              loginController.text, widget.user);
+                              loginController.text.toLowerCase(), widget.user);
                           if (userData != null) {
                             Navigator.pushReplacement(
                               context,

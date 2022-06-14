@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 class User {
-  User(this.user, this.token, this.coalition, this.color);
+  User(this.user, this.token, this.coalition, this.color, this.code);
   dynamic user;
   dynamic token;
+  dynamic code;
   dynamic coalition;
   Color color;
 }

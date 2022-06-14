@@ -1,7 +1,7 @@
 // ignore_for_file: file_names,
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/profilePage.dart';
-import 'package:swifty_companion/services/user.dart';
+import 'package:swifty_companion/services/User.dart';
 import 'package:swifty_companion/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -49,23 +49,31 @@ class _LoginPageState extends State<LoginPage> {
                         setState(() {
                           _isLoading = true;
                         });
-                        final User result = await auth();
-                        if (result.user != null) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfilePage(result)));
+                        try {
+                          final User result = await auth();
+                          print(result.toString());
+                          if (result.user != null) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage(result)));
+                          }
+                        } catch (e) {
+                          setState(() {
+                            _isLoading = false;
+                          });
                         }
                       },
                       child: Center(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Image.asset('images/42_dark.png'),
                           const Text(
                             'Authenticate with Intranet',
-                            style: TextStyle(color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],

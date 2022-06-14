@@ -1,6 +1,6 @@
 // ignore_for_file: file_names,
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/services/user.dart';
+import 'package:swifty_companion/services/User.dart';
 
 class Available extends StatelessWidget {
   const Available({Key? key, required this.user}) : super(key: key);

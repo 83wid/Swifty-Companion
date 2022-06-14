@@ -8,7 +8,6 @@ import "package:flutter/material.dart"
         Center,
         CircularProgressIndicator,
         Color,
-        Colors,
         Column,
         Container,
         DecorationImage,
@@ -20,7 +19,6 @@ import "package:flutter/material.dart"
         MediaQuery,
         Navigator,
         NetworkImage,
-        Padding,
         Scaffold,
         SizedBox,
         Stack,
@@ -40,7 +38,7 @@ import 'package:swifty_companion/Widgets/level.dart';
 import 'package:swifty_companion/Widgets/projects.dart';
 import 'package:swifty_companion/Widgets/skills.dart';
 import 'package:swifty_companion/Widgets/userInfo.dart';
-import 'package:swifty_companion/services/user.dart';
+import 'package:swifty_companion/services/User.dart';
 
 class ProfilePage extends StatefulWidget {
   final User userData;

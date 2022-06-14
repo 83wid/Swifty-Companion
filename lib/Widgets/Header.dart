@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:swifty_companion/profilePage.dart';
 import 'package:swifty_companion/searchPage.dart';
 import 'package:swifty_companion/services/auth_service.dart';
-import 'package:swifty_companion/services/user.dart';
+import 'package:swifty_companion/services/User.dart';
 
 class Header extends StatefulWidget {
   const Header({Key? key, required this.user}) : super(key: key);
@@ -26,36 +26,46 @@ class _HeaderState extends State<Header> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
-              onTap: () async {
-                setState(() {
-                  _isLoading = true;
-                });
-                // widget.callback(true);
-                final User userData = await searchUserData(null, widget.user);
-                if (userData.user['id'] != widget.user.user['id']) {
+                onTap: () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  // widget.callback(true);
+                  final User userData = await searchUserData(null, widget.user);
+                  if (userData.user['id'] != widget.user.user['id']) {
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfilePage(
+                            userData,
+                          ),
+                        ),
+                        (r) => false);
+                    // Navigator.pushReplacement(
+                    //   context,
+                    // MaterialPageRoute(
+                    //   builder: (context) => ProfilePage(
+                    //     userData,
+                    //   ),
+                    // ),
+                    // );
+                  }
                   setState(() {
                     _isLoading = false;
                   });
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfilePage(
-                        userData,
-                      ),
-                    ),
-                  );
-                }
-                setState(() {
-                  _isLoading = false;
-                });
-                // widget.callback(false);
-              },
-              child: _isLoading
-                  ? const CircularProgressIndicator()
-                  : Image.asset('images/42_dark.png',
-                      width: MediaQuery.of(context).size.width / 8,
-                      fit: BoxFit.contain),
-            ),
+                  // widget.callback(false);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  width: MediaQuery.of(context).size.width / 8,
+                  height: MediaQuery.of(context).size.width / 8,
+                  child: _isLoading
+                      ? const CircularProgressIndicator()
+                      : Image.asset('images/42_dark.png', fit: BoxFit.contain),
+                )),
             TextButton(
               child: Icon(
                 Icons.search,

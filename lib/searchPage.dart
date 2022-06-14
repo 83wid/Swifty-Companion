@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swifty_companion/Widgets/SearchBar.dart';
-import 'package:swifty_companion/services/user.dart';
+import 'package:swifty_companion/services/User.dart';
 
 class SearchPage extends StatefulWidget {
   final User user;
@@ -14,23 +14,25 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   // ignore: prefer_final_fields
-  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          Image.asset('images/42.png',
-              width: MediaQuery.of(context).size.width / 3, fit: BoxFit.contain),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: SearchBar(
-              user: widget.user,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            Image.asset('images/42.png',
+                width: MediaQuery.of(context).size.width / 3, fit: BoxFit.contain),
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: SearchBar(
+                user: widget.user,
+              ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
